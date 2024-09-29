@@ -16,6 +16,12 @@
 	category_tags = list(CTAG_ADVENTURER)
 	min_pq = 0
 
+/datum/outfit/job/roguetown/adventurer/sfighter/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.become_blind("TRAIT_GENERIC")
+	var/classes = list("Path of the Fist","Vanguard","Path of the Sword")
+	var/classchoice = input("Choose your background", "Available backgrounds") as anything in classes
+
 
 /datum/outfit/job/roguetown/adventurer/sfighter/pre_equip(mob/living/carbon/human/H)
 	..()
