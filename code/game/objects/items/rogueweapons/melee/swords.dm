@@ -338,7 +338,7 @@
 				H.adjustFireLoss(60)
 				H.Paralyze(30)
 				H.fire_act(1,5)
-				H.apply_status_effect(/datum/status_effect/debuff/silver_curse/greater)
+				H.apply_status_effect(/datum/status_effect/debuff/silver_curse)
 				src.last_used = world.time
 			else
 				H.Stun(30)
@@ -346,7 +346,7 @@
 				H.adjustFireLoss(60)
 				H.Paralyze(30)
 				H.fire_act(1,5)
-				H.apply_status_effect(/datum/status_effect/debuff/silver_curse/greater)
+				H.apply_status_effect(/datum/status_effect/debuff/silver_curse)
 				src.last_used = world.time
 		if(V_lord)
 			if(V_lord.vamplevel < 4 && !V)
@@ -679,18 +679,18 @@
 	misscost = 5
 
 /datum/intent/sword/thrust/zwei
-    name = "thrust"
-    blade_class = BCLASS_STAB
-    attack_verb = list("stabs")
-    animname = "stab"
-    icon_state = "instab"
-    reach = 1
-    chargetime = 1
-    warnie = "mobwarning"
-    hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-    penfactor = 20
-    swingdelay = 1
-    misscost = 5
+	name = "thrust"
+	blade_class = BCLASS_STAB
+	attack_verb = list("stabs")
+	animname = "stab"
+	icon_state = "instab"
+	reach = 1
+	chargetime = 1
+	warnie = "mobwarning"
+	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
+	penfactor = 20
+	swingdelay = 1
+	misscost = 5
 
 /datum/intent/sword/strike
 	name = "pommel strike"
@@ -824,6 +824,13 @@
 	wdefense = 3
 	wbalance = -1 // Heavy, STR bonus
 	sellprice = 20
+
+/obj/item/rogueweapon/sword/iron/messer/peasant
+	name = "scythe sword"
+	desc = "A simple scythe blade has been fastened to a wooden handle to create an improvised weapon."
+	force = 18 // Can't be dual wielded, but shouldn't be higher than a steel equivalent.
+	icon_state = "scytheblade"
+
 
 /obj/item/rogueweapon/sword/short
 	name = "short sword"
@@ -1010,6 +1017,20 @@
 	desc = "A precise rapier, favored by the small, eloquent and bloodthirsty."
 	icon_state = "rapier"
 	smeltresult = /obj/item/ingot/steel
+	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier)
+	gripped_intents = null
+	parrysound = "rapier"
+	swingsound = BLADEWOOSH_SMALL
+	minstr = 6
+	wdefense = 5
+	wbalance = 1
+
+/obj/item/rogueweapon/sword/rapier/ironestoc
+	name = "iron estoc"
+	force = 16
+	desc = "A precise iron estoc, favored by the skilled duelists of Valoria."
+	icon_state = "estoc"
+	smeltresult = /obj/item/ingot/iron
 	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier)
 	gripped_intents = null
 	parrysound = "rapier"
@@ -1236,7 +1257,7 @@
 	slot_flags = ITEM_SLOT_BACK//how the fuck you could put this thing on your hip?
 	dropshrink = 0.75
 	smeltresult = /obj/item/ingot/copper
-	sellprice = 25//lets make the two bars worth it 
+	sellprice = 25//lets make the two bars worth it
 
 // Hoplite Kophesh
 /obj/item/rogueweapon/sword/khopesh
@@ -1262,3 +1283,14 @@
 	wdefense = 3 // Lower than average sword defense (meant to pair with a shield)
 	wbalance = -1 // Likely weighted towards the blade, for deep cuts and chops
 	sellprice = 200 // A noble collector would love to get his/her hands on one of these blades
+
+/obj/item/rogueweapon/sword/scimitar
+	slot_flags = ITEM_SLOT_HIP
+	force = 20
+	force_wielded = 25
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust)
+	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust)
+	name = "scimitar"
+	desc = "A Zybantu design for swords, these curved blades are a common sight in the lands of the Ziggurat."
+	icon_state = "scimitar"
+	icon = 'icons/roguetown/weapons/32.dmi'

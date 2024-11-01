@@ -75,7 +75,7 @@
 	queue_smooth_neighbors(src)
 	..()
 
-/turf/closed/mineral/proc/gets_drilled(user, give_exp = TRUE)
+/turf/closed/mineral/proc/gets_drilled(user, triggered_by_explosion = FALSE, give_exp = TRUE)
 	new /obj/item/natural/stone(src)
 	if(prob(30))
 		new /obj/item/natural/stone(src)
@@ -140,12 +140,12 @@
 	switch(severity)
 		if(3)
 			if (prob(75))
-				gets_drilled(null, 1)
+				gets_drilled(null, triggered_by_explosion = TRUE)
 		if(2)
 			if (prob(90))
-				gets_drilled(null, 1)
+				gets_drilled(null, triggered_by_explosion = TRUE)
 		if(1)
-			gets_drilled(null, 1)
+			gets_drilled(null, triggered_by_explosion = TRUE)
 	return
 
 /turf/closed/mineral/Spread(turf/T)
@@ -511,7 +511,7 @@
 			det_time = 0
 		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [det_time] reactions left till the explosion!</span>")
 
-/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
+/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = FALSE, give_exp = TRUE)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/blank.ogg',50,TRUE)
 		explosive_reaction(user, triggered_by_explosion)
@@ -565,7 +565,7 @@
 		to_chat(usr, "<span class='warning'>The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner.</span>")
 
 
-/turf/closed/mineral/strong/gets_drilled(user)
+/turf/closed/mineral/strong/gets_drilled(user, triggered_by_explosion = FALSE, give_exp = TRUE)
 	drop_ores()
 	var/flags = NONE
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
@@ -602,19 +602,19 @@
 	turf_type = /turf/open/floor/rogue/naturalstone
 	above_floor = /turf/open/floor/rogue/naturalstone
 	baseturfs = list(/turf/open/floor/rogue/naturalstone)
-	mineralSpawnChanceList = list(/turf/closed/mineral/rogue/salt = 20, /turf/closed/mineral/rogue/copper = 15, /turf/closed/mineral/rogue/iron = 5)
+	mineralSpawnChanceList = list(/turf/closed/mineral/rogue/salt = 20, /turf/closed/mineral/rogue/copper = 15, /turf/closed/mineral/rogue/iron = 5, /turf/closed/mineral/rogue/coal = 5)
 	mineralChance = 30
 	max_integrity = 400
 
 /turf/closed/mineral/random/rogue/med
 	icon_state = "minrandmed"
 	mineralChance = 50
-	mineralSpawnChanceList = list(/turf/closed/mineral/rogue/salt = 20, /turf/closed/mineral/rogue/iron = 25, /turf/closed/mineral/rogue/coal = 20, /turf/closed/mineral/rogue/copper = 10)
+	mineralSpawnChanceList = list(/turf/closed/mineral/rogue/salt = 20, /turf/closed/mineral/rogue/iron = 25, /turf/closed/mineral/rogue/coal = 20, /turf/closed/mineral/rogue/copper = 10, /turf/closed/mineral/rogue/gemeralds = 1)
 
 /turf/closed/mineral/random/rogue/high
 	icon_state = "minrandhigh"
-	mineralChance = 50
-	mineralSpawnChanceList = list(/turf/closed/mineral/rogue/gold = 10 , /turf/closed/mineral/rogue/iron = 25, /turf/closed/mineral/rogue/silver = 10)
+	mineralChance = 60
+	mineralSpawnChanceList = list(/turf/closed/mineral/rogue/gold = 15 , /turf/closed/mineral/rogue/iron = 25, /turf/closed/mineral/rogue/silver = 15, /turf/closed/mineral/rogue/gemeralds = 10)
 
 
 //begin actual mineral turfs
@@ -687,6 +687,14 @@
 	rockType = /obj/item/natural/rock/coal
 	spreadChance = 3
 	spread = 4
+
+/turf/closed/mineral/rogue/gemeralds
+	icon_state = "mingold"
+	desc = "there is an strange light on the stone?"
+	mineralType = /obj/item/roguegem/random
+	rockType = /obj/item/natural/rock/gemerald
+	spreadChance = 3
+	spread = 2
 
 /turf/closed/mineral/rogue/bedrock
 	name = "rock"
